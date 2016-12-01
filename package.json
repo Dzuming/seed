@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "babel client -d dist",
-    "start": "http-server",
+    "start": "gulp watch",
     "test": "mocha",
     "test-cover": "mocha --reporter=mocha-istanbul"
   },
@@ -18,12 +18,18 @@
     "babel-preset-latest": "^6.16.0",
     "browser-sync": "^2.18.2",
     "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-jslint": "^1.0.5",
+    "gulp-mocha": "^3.0.1",
     "gulp-sass": "^2.3.2",
-    "mocha": "^3.2.0"
+    "jslint": "^0.10.3",
+    "mocha": "^3.2.0",
+    "webpack": "^2.1.0-beta.25"
   },
   "dependencies": {
     "chai": "^3.5.0",
     "istanbul": "^0.4.5",
-    "mocha-istanbul": "^0.3.0"
+    "mocha-istanbul": "^0.3.0",
+    "webpack-stream": "^3.2.0"
   }
 }
