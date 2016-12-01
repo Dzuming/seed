@@ -4,8 +4,8 @@
   "description": "seed for javascript ECMAScript2016",
   "main": "index.js",
   "scripts": {
-    "build": "babel client -d dist",
-    "start": "gulp watch",
+    "build": "gulp build",
+    "start": "gulp start",
     "test": "mocha",
     "test-cover": "mocha --reporter=mocha-istanbul"
   },
@@ -24,6 +24,7 @@
     "gulp-sass": "^2.3.2",
     "jslint": "^0.10.3",
     "mocha": "^3.2.0",
+    "run-sequence": "^1.2.2",
     "webpack": "^2.1.0-beta.25"
   },
   "dependencies": {
