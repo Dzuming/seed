@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "babel client -d dist",
+    "start": "http-server",
     "test": "mocha",
     "test-cover": "mocha --reporter=mocha-istanbul"
   },

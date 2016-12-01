@@ -1,1 +1,3 @@
--sass
+-gulp browser-sync
+-gulp watch
+-gulp babel
