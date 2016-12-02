@@ -2,12 +2,13 @@ const gulp = require('gulp');
 const sass = require('gulp-sass');
 const browserSync = require('browser-sync').create();
 const babel = require('gulp-babel');
+const babelRegister = require('babel-register');
 const jslint = require('gulp-jslint');
 const webpack = require('webpack-stream');
 const mocha = require('gulp-mocha');
 const runSequence = require('run-sequence');
 gulp.task('build', function (callback) {
-  runSequence( ['styles', 'babel',  'webpack', 'jslint', 'test'],
+  runSequence( 'test',['styles', 'babel',  'webpack', 'jslint'],
     callback
   )
 })
@@ -54,13 +55,20 @@ gulp.task('webpack', function () {
     .pipe(gulp.dest('./client/dist/'));
 });
 gulp.task('test', () =>
-  gulp.src('./test', { read: true })
+  gulp.src('./test/*js', { read: true })
     // gulp-mocha needs filepaths so you can't have any plugins before it
-    .pipe(mocha())
-    .pipe(mocha({ reporter: 'mocha-istanbul' }))
+    .pipe(mocha({
+      compilers: babelRegister
+      }))
+    .pipe(mocha({ 
+      reporter: 'mocha-istanbul',
+      
+  
+}))
 );
 gulp.task('browserSync', function (done) {
   browserSync.init({
+    browser: "chrome",
     server: {
       baseDir: './client'
     },

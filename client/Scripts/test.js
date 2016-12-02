@@ -1,12 +1,11 @@
- "use strict";
- console.log("test")
- class testing {
- constructor (value) {
-     
-        this.value = value;
-    }
-    get value() {
+"use strict";
+class test {
+  constructor(value) {
+
+    this.value = value;
+  }
+  value() {
     return this.value;
   }
- }
- 
+}
+module.exports = test;
