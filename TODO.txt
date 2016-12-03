@@ -1,3 +1,1 @@
-- ecmaScript6 doesn't work
-- Fix test
 -bundle.js doesn't load after npm start

@@ -19,16 +19,15 @@
     "browser-sync": "^2.18.2",
     "gulp": "^3.9.1",
     "gulp-babel": "^6.1.2",
-    "gulp-jslint": "^1.0.5",
     "gulp-mocha": "^3.0.1",
     "gulp-sass": "^2.3.2",
-    "jslint": "^0.10.3",
     "mocha": "^3.2.0",
     "run-sequence": "^1.2.2",
     "webpack": "^2.1.0-beta.25"
   },
   "dependencies": {
     "chai": "^3.5.0",
+    "eslint": "^3.11.1",
     "istanbul": "^0.4.5",
     "mocha-istanbul": "^0.3.0",
     "webpack-stream": "^3.2.0"

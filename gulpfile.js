@@ -3,12 +3,12 @@ const sass = require('gulp-sass');
 const browserSync = require('browser-sync').create();
 const babel = require('gulp-babel');
 const babelRegister = require('babel-register');
-const jslint = require('gulp-jslint');
+const eslint = require('gulp-eslint');
 const webpack = require('webpack-stream');
 const mocha = require('gulp-mocha');
 const runSequence = require('run-sequence');
 gulp.task('build', function (callback) {
-  runSequence( 'test',['styles', 'babel',  'webpack', 'jslint'],
+  runSequence( 'test',['styles', 'babel',  'webpack', 'eslint'],
     callback
   )
 })
@@ -36,10 +36,25 @@ gulp.task('babel', () => {
     }))
     .pipe(gulp.dest('./client/dist/js'));
 });
-gulp.task('jslint', function () {
+gulp.task('eslint', function () {
   return gulp.src(['./client/Scripts/*.js'])
-    .pipe(jslint({ /* this object represents the JSLint directives being passed down */ }))
-    .pipe(jslint.reporter('default'));
+    .pipe(eslint({
+      "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+    },
+        rules: {
+            'strict': 1
+        },
+        globals: [
+            'jQuery',
+            '$'
+        ],
+        envs: [
+            'browser'
+        ]
+    }))
+    .pipe(eslint.format())
 });
 gulp.task('webpack', function () {
   return gulp.src('./client/dist/js/*')
