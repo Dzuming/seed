@@ -7,8 +7,9 @@ const eslint = require('gulp-eslint');
 const webpack = require('webpack-stream');
 const mocha = require('gulp-mocha');
 const runSequence = require('run-sequence');
+const sourcemaps = require('gulp-sourcemaps');
 gulp.task('build', function (callback) {
-  runSequence( 'test',['styles', 'babel',  'webpack', 'eslint'],
+  runSequence( 'test',['styles',  'webpack', 'eslint'],
     callback
   )
 })
@@ -27,15 +28,8 @@ gulp.task('styles', function () {
 });
 gulp.task('watch', function () {
   gulp.watch('./client/Templates/*.scss', ['styles']);
-  gulp.watch('./client/Scripts/*.js', ['babel', 'webpack']);
+  gulp.watch('./client/Scripts/*.js', ['webpack']);
 })
-gulp.task('babel', () => {
-  return gulp.src('./client/Scripts/*.js')
-    .pipe(babel({
-      presets: ['es2015']
-    }))
-    .pipe(gulp.dest('./client/dist/js'));
-});
 gulp.task('eslint', function () {
   return gulp.src(['./client/Scripts/*.js'])
     .pipe(eslint({
@@ -57,7 +51,9 @@ gulp.task('eslint', function () {
     .pipe(eslint.format())
 });
 gulp.task('webpack', function () {
-  return gulp.src('./client/dist/js/*')
+  return gulp.src('./client/Scripts/*.js')
+    .pipe(sourcemaps.init({loadMaps: true}))
+    
     .pipe(webpack({
       // entry: {
       //   app: 'src/app.js',
@@ -67,6 +63,10 @@ gulp.task('webpack', function () {
         filename: 'bundle.js',
       },
     }))
+    .pipe(babel({
+            presets: ['es2015']
+        }))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest('./client/dist/'));
 });
 gulp.task('test', () =>
