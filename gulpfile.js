@@ -52,20 +52,17 @@ gulp.task('eslint', function () {
 });
 gulp.task('webpack', function () {
   return gulp.src('./client/Scripts/*.js')
-    .pipe(sourcemaps.init({loadMaps: true}))
     
-    .pipe(webpack({
-      // entry: {
-      //   app: 'src/app.js',
-      //   test: 'test/test.js',
-      // },
-      output: {
-        filename: 'bundle.js',
-      },
-    }))
     .pipe(babel({
             presets: ['es2015']
         }))
+        .pipe(sourcemaps.init({loadMaps: true}))
+        .pipe(webpack({
+          output: {
+        filename: 'bundle.js',
+      },
+      devtool: 'source-map'
+    }))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('./client/dist/'));
 });

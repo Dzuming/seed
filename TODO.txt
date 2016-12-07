@@ -1,1 +1,1 @@
--bundle.js doesn't load after npm start
+-webpack doesn't load after npm start
