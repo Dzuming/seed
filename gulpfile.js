@@ -9,12 +9,12 @@ const mocha = require('gulp-mocha');
 const runSequence = require('run-sequence');
 const sourcemaps = require('gulp-sourcemaps');
 gulp.task('build', function (callback) {
-  runSequence( 'test',['styles',  'webpack', 'eslint'],
+  runSequence('test', ['styles', 'webpack', 'eslint'],
     callback
   )
 })
 gulp.task('start', function (callback) {
-  runSequence( ['browserSync', 'watch'],
+  runSequence(['browserSync', 'watch'],
     callback
   )
 })
@@ -36,53 +36,59 @@ gulp.task('eslint', function () {
       "parserOptions": {
         "ecmaVersion": 6,
         "sourceType": "module",
-    },
-        rules: {
-            'strict': 1
-        },
-        globals: [
-            'jQuery',
-            '$'
-        ],
-        envs: [
-            'browser'
-        ]
+      },
+      rules: {
+        'strict': 1
+      },
+      globals: [
+        'jQuery',
+        '$'
+      ],
+      envs: [
+        'browser'
+      ]
     }))
     .pipe(eslint.format())
 });
 gulp.task('webpack', function () {
   return gulp.src('./client/Scripts/*.js')
-    
+    .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(babel({
-            presets: ['es2015']
-        }))
-        .pipe(sourcemaps.init({loadMaps: true}))
-        .pipe(webpack({
-          output: {
+      presets: ['es2015']
+    }))
+    .pipe(webpack({
+      output: {
         filename: 'bundle.js',
       },
       devtool: 'source-map'
     }))
+
+
+
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./client/dist/'));
+    .pipe(gulp.dest('./client/dist/'))
+    .pipe(browserSync.reload({
+      stream: true
+    }))
 });
 gulp.task('test', () =>
   gulp.src('./test/*js', { read: true })
     // gulp-mocha needs filepaths so you can't have any plugins before it
     .pipe(mocha({
       compilers: babelRegister
-      }))
-    .pipe(mocha({ 
+    }))
+    .pipe(mocha({
       reporter: 'mocha-istanbul',
-      
-  
-}))
+
+
+    }))
 );
 gulp.task('browserSync', function (done) {
   browserSync.init({
     browser: "chrome",
     server: {
       baseDir: './client'
+      
     },
   })
 })

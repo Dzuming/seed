@@ -7,5 +7,5 @@ class test {
     return this.value;
   }
 }
-console.log("test");
+console.log("1234156ss");
 module.exports = test;
