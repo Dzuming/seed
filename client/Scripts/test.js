@@ -1,11 +1,8 @@
 
-class test {
-  constructor(value) {
-    this.value = value;
-  }
-  value() {
-    return this.value;
+const test = {
+  Calculate(value) {
+    return value;
   }
 }
-console.log("1234156ss");
+console.log(test.Calculate(2));
 module.exports = test;

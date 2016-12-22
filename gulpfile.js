@@ -8,17 +8,17 @@ const webpack = require('webpack-stream');
 const mocha = require('gulp-mocha');
 const runSequence = require('run-sequence');
 const sourcemaps = require('gulp-sourcemaps');
-gulp.task('build', function (callback) {
+gulp.task('build', (callback)=> {
   runSequence('test', ['styles', 'webpack', 'eslint'],
     callback
   )
 })
-gulp.task('start', function (callback) {
+gulp.task('start', (callback)=> {
   runSequence(['browserSync', 'watch'],
     callback
   )
 })
-gulp.task('styles', function () {
+gulp.task('styles', ()=> {
   gulp.src('./client/Templates/*.scss')
     .pipe(sass().on('error', sass.logError))
     .pipe(gulp.dest('./client/dist/css/'))
@@ -26,11 +26,11 @@ gulp.task('styles', function () {
       stream: true
     }))
 });
-gulp.task('watch', function () {
+gulp.task('watch',  ()=> {
   gulp.watch('./client/Templates/*.scss', ['styles']);
   gulp.watch('./client/Scripts/*.js', ['webpack']);
 })
-gulp.task('eslint', function () {
+gulp.task('eslint',  () => {
   return gulp.src(['./client/Scripts/*.js'])
     .pipe(eslint({
       "parserOptions": {
@@ -50,7 +50,7 @@ gulp.task('eslint', function () {
     }))
     .pipe(eslint.format())
 });
-gulp.task('webpack', function () {
+gulp.task('webpack', () => {
   return gulp.src('./client/Scripts/*.js')
     .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(babel({
@@ -62,9 +62,6 @@ gulp.task('webpack', function () {
       },
       devtool: 'source-map'
     }))
-
-
-
     .pipe(sourcemaps.write())
     .pipe(gulp.dest('./client/dist/'))
     .pipe(browserSync.reload({
@@ -83,12 +80,13 @@ gulp.task('test', () =>
 
     }))
 );
-gulp.task('browserSync', function (done) {
+gulp.task('browserSync', () => {
   browserSync.init({
     browser: "chrome",
     server: {
-      baseDir: './client'
-      
+      baseDir: './client',
     },
+    
+    
   })
 })
